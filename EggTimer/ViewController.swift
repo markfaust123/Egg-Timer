@@ -12,26 +12,21 @@ class ViewController: UIViewController {
     
     // DICTIONARY
     let eggTimes = ["Soft": 5, "Medium": 7, "Hard": 12]
+    var seconds = 60
+    var timer = Timer()
     
     @IBAction func hardnessSelected(_ sender: UIButton) {
         
+        timer.invalidate()
+        
         // can confidently unwrap because know spellings to be correct and not going to contain nil values
         let hardness = sender.currentTitle!
-        let seconds = eggTimes[hardness]!
+        let minutes = eggTimes[hardness]!
         
-        var secondsRemaining = seconds * 60
+        seconds = minutes * 60
         
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (Timer) in
-                if secondsRemaining > 0 {
-                    print ("\(secondsRemaining) seconds.")
-                    secondsRemaining -= 1
-                } else {
-                    Timer.invalidate()
-                }
-            }
-
-//        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: seconds, repeats: true)
-
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+    
         
 //        switch hardness {
 //        case "Soft":
@@ -53,12 +48,11 @@ class ViewController: UIViewController {
         
     }
     
-    @objc func updateCounter(time: Int) {
-        var time = time
+    @objc func updateCounter() {
         //example functionality
-        if time > 0 {
-            print("\(time) seconds.")
-            time -= 1
+        if seconds > 0 {
+            print("\(seconds) seconds.")
+            seconds -= 1
         }
     }
     

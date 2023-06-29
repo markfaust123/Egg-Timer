@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var titleLabel: UILabel!
+    
     // DICTIONARY
     let eggTimes = ["Soft": 5, "Medium": 7, "Hard": 12]
     var seconds = 60
@@ -24,35 +26,20 @@ class ViewController: UIViewController {
         let minutes = eggTimes[hardness]!
         
         seconds = minutes * 60
+        seconds = 5
         
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
-    
-        
-//        switch hardness {
-//        case "Soft":
-//            print(softTime)
-//        case "Medium":
-//            print(mediumTime)
-//        default:
-//            print(hardTime)
-//        }
-        
-//        Optional Strings are automatically unwrapped when used in comparison?
-//        if hardness == "Soft" {
-//            print(softTime)
-//        } else if hardness == "Medium" {
-//            print(mediumTime)
-//        } else {
-//            print(hardTime)
-//        }
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(eggCountdown), userInfo: nil, repeats: true)
         
     }
     
-    @objc func updateCounter() {
+    @objc func eggCountdown() {
         //example functionality
         if seconds > 0 {
             print("\(seconds) seconds.")
             seconds -= 1
+        } else {
+            timer.invalidate()
+            titleLabel.text = "DONE!"
         }
     }
     
